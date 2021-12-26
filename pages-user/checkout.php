@@ -115,7 +115,7 @@ if (isset($_SESSION['user_logged'])) {
             </div>
          
       
-      <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
+            <a class="btn bg-gradient-primary mt-4 w-80" href="../pages-all/logout.php" type="button">LOGOUT</a>
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
@@ -242,8 +242,8 @@ if (isset($_SESSION['user_logged'])) {
               <h6 class="font-weight-bolder mb-0">Data Customer</h6>
               <form method="post" action="">
                 <div class="form-group form mb-0">
-                    <label for="exampleInputEmail1" >Email</label>
-                    <input type="email" class="form-control" readonly value="<?php echo $_SESSION['user_email'];?>" >
+                <label for="exampleInputEmail1" >Email</label>
+                <input type="email" class="form-control" readonly value="<?php echo $_SESSION['user_email'];?>" >
                 </div>
                 <div class="form-group  mb-0">
                 <label for="exampleInputEmail1">Nama</label>
@@ -327,24 +327,49 @@ if (isset($_SESSION['user_logged'])) {
                 $jam            = date('H:i:s');
         
 
-
-                $pemilik = mysqli_query($mysqli, "INSERT INTO pemilik (Nama_Pemilik, Email, Alamat_Pemilik, Telp_Pemilik)
-                                                  VALUES ('$nama_pemilik', '$email', '$alamat_pemilik', '$telp_pemilik')");
+             
+                $pemilik      = mysqli_query($mysqli, "INSERT INTO pemilik (Nama_Pemilik, Email, Alamat_Pemilik, Telp_Pemilik)
+                                                       VALUES ('$nama_pemilik', '$email', '$alamat_pemilik', '$telp_pemilik')");
 
                 
-                $id_pemilik = mysqli_query($mysqli, "SELECT ID_Pemilik FROM pemilik
+                //ambil id pemilik
+                $id_pemilik  = mysqli_query($mysqli, "SELECT ID_Pemilik FROM pemilik
                                                       ORDER BY ID_Pemilik DESC LIMIT 1");
-
                 $row_pemilik = $id_pemilik->fetch_assoc();
                 $id_customer = $row_pemilik['ID_Pemilik'];
+
+
   
+                //insert kendaraan
+                $kendaraan   = mysqli_query($mysqli, "INSERT INTO kendaraan VALUES
+                                                     ('$no_stnk', '$id_customer','$id_tipe', '$no_mesin', '$no_rangka', '$tahun', '$warna')");
 
-                $kendaraan = mysqli_query($mysqli, "INSERT INTO kendaraan VALUES
-                                          ('$no_stnk', '$id_customer','$id_tipe', '$no_mesin', '$no_rangka', '$tahun', '$warna')");
+                //insert nota
+                $nota        = mysqli_query($mysqli,"INSERT INTO nota_suku_cadang (Tgl_Nota_Suku_Cadang)
+                                                     VALUES ('$tanggal')");
 
 
+                //ambiil no nota
+                $no_nota     = mysqli_query($mysqli,"SELECT No_Nota_Suku_Cadang FROM nota_suku_cadang
+                                                     ORDER BY No_Nota_Suku_Cadang DESC LIMIT 1");
+                $row_nota    = $no_nota->fetch_assoc();
+                $no_nota_sc  = $row_nota['No_Nota_Suku_Cadang'];
+
+
+                //insert detail  nota
+                foreach ($_SESSION['cart'] as $id_suku_cadang => $jumlah){
+                $detail      = mysqli_query($mysqli, "INSERT INTO detail_nota_suku_cadang VALUES
+                                                      ('$no_nota_sc', '$id_suku_cadang', '$jumlah')");
+                }
+
+
+                //insert pkb
+                $pkb         = mysqli_query($mysqli, "INSERT INTO pkb (NO_STNK, No_Nota_Suku_Cadang, Tgl_beli, Jam_beli)
+                                                      VALUES ('$no_stnk', '$no_nota_sc', '$tanggal', '$jam')");
+
+                                        
                 
-               
+
 
 
 

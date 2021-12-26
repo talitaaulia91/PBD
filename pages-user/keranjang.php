@@ -34,6 +34,7 @@ include_once('../config/database.php');
 <?php 
  	// cek apakah yang mengakses halaman ini sudah login
 if (isset($_SESSION['user_logged'])) {
+  if(isset($_SESSION['cart'])){
   
 ?>
 
@@ -116,7 +117,7 @@ if (isset($_SESSION['user_logged'])) {
             </div>
          
       
-      <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
+            <a class="btn bg-gradient-primary mt-4 w-80" href="../pages-all/logout.php" type="button">LOGOUT</a>
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
@@ -434,6 +435,10 @@ if (isset($_SESSION['user_logged'])) {
 </html>
 
 <?php
+  }else{
+    echo "<script>alert('Keranjang kosong, pilih produk!');</script>";
+    echo "<script>location='suku_cadang.php';</script>";
+  }
 } else {
     header('location: sign-in.php');
 }
