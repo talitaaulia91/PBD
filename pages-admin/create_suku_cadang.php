@@ -212,86 +212,59 @@ if (isset($_SESSION['user_logged'])) {
     <!-- End Navbar -->
 
 
+    <div class="container-fluid py-1 px-5">
+              <div class="row col-md-6"> 
+              <h6 class="font-weight-bolder mb-0">Tambah suku cadang</h6>
+              <form method="post" action="" enctype="multipart/form-data">
+                    <div class="form-group form mb-0">
+                    <label for="exampleInputEmail1" >ID suku cadang</label>
+                    <input type="text" name="id_sc" class="form-control"  placeholder="Masukkan ID suku cadang" >
+                    </div>
+                    <div class="form-group  mb-0">
+                    <label for="exampleInputEmail1">Nama suku cadang</label>
+                    <input type="text" name="nama_sc"class="form-control" placeholder="Masukkan Nama suku cadang">
+                    </div>
+                    <div class="form-group  mb-0">
+                    <label for="exampleInputPassword1">Harga  satuan</label>
+                    <input type="text" name="harga_sc"class="form-control" placeholder="Masukkan harga satuan">
+                    </div>
+                    <div class="form-group  mb-0">
+                    <label for="exampleInputPassword1">Stok</label>
+                    <input type="number" name="stok"class="form-control" placeholder="Masukkan stok">
+                    </div>
+                    <div class="form-group  mb-0">
+                    <label for="exampleInputPassword1">Gambar</label>
+                    <input type="file" name="gambar"class="form-control">
+                    </div>
+      
+                <button type="submit" name="add" value="add" class="btn bg-gradient-info w-30 mt-4 mb-2">ADD +</button>
+              </form>
+              </div>
+              </div>
+              </div>
+
+
+              <?php
+                if(isset($_POST['add'])){
+                $id_sc          = $_POST['id_sc'];
+                $nama_sc        = $_POST['nama_sc'];
+                $harga_sc       = $_POST['harga_sc'];
+                $stok           = $_POST['stok'];
+                $gambar         = $_FILES['gambar']['name'];
+                $lokasi         = $_FILES['gambar']['tmp_name'];
+                move_uploaded_file($lokasi, '../assets/img/'.$gambar);
+
+        
+
+
+               $suku_cadang =mysqli_query($mysqli, "INSERT INTO suku_cadang VALUES
+                                                    ('$id_sc','$nama_sc', '$harga_sc', '$stok', '$gambar')");
+
+              }
+              ?>
+
+  
    
-    <div class="container-fluid py-4">
-    <a class="btn bg-gradient-info w-10 mt-4 mb-3" href="create_suku_cadang.php">ADD +</a>
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>SUKU CADANG</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 align-middle text-center text-sm">No</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID suku cadang</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-                    </tr>
-                  </thead>
-                 <tbody>
-
-                    <?php
-                     foreach ($tabel_suku_cadang as $data_suku_cadang) : 
-                    ?>
-                    <tr>
-
-                    
-                      <td class="align-middle text-center text-sm">
-                      <span class="text-s font-weight-bold mb-0">
-                      <?php echo $counter;  ?> 
-                     </span>
-                    </td>
-
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-s font-weight-bold mb-0">
-                        <?php echo $data_suku_cadang['ID_Suku_Cadang'];  ?> 
-                        </span>
-                      </td>
-
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-s font-weight-bold">
-                        <?php echo  $data_suku_cadang['Nama_Suku_cadang'];  ?> 
-                        </span>
-                      </td>
-
-
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-s font-weight-bold">
-                        <?php echo  $data_suku_cadang['Harga_Satuan'];  ?> 
-                        </span>
-                      </td>
-
-
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-s font-weight-bold">
-                        <?php echo  $data_suku_cadang['stok'];  ?> 
-                        </span>
-                      </td>
-
-
-
-                      <td class="align-middle text-center">
-                      <a class="btn btn-link text-dark px-3 mb-0" href="edit_suku_cadang.php?ID_Suku_Cadang=<?php echo $data_suku_cadang['ID_Suku_Cadang']; ?>"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="hapus_suku_cadang.php?id=<?php echo $data_suku_cadang['ID_Suku_Cadang']; ?>"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      </td>                  
-                    </tr>
-                  </tbody>
-                  <?php
-                       $counter++;
-                       endforeach
-                 ?>
-                </table>          
-              </div>          
-            </div>          
-          </div>         
-        </div>
-      </div>
    <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
