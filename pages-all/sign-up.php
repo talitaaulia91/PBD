@@ -35,10 +35,10 @@ include_once('../config/database.php');
 <?php
 				if(isset($_POST['register'])){
 										
-					$Username	= ($_POST['username']);
-					$Email		= ($_POST['email']);
-					$Password	= ($_POST['password']);
-					$Kpassword	= ($_POST['kpassword']);
+					$Username	    = ($_POST['username']);
+					$Email	    	= ($_POST['email']);
+					$Password	    = ($_POST['password']);
+					$Kpassword	  = ($_POST['kpassword']);
 					
 					$query = mysqli_query($mysqli, "SELECT * FROM user WHERE username='$Username'");
 					$query2 = mysqli_query($mysqli, "SELECT * FROM user WHERE email='$Email'");
