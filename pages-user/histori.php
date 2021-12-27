@@ -1,15 +1,11 @@
 <?php
 session_start();
 include_once('../config/database.php');
-$query_pkb = "SELECT * FROM pkb WHERE
-              NO_STNK IN (SELECT NO_STNK FROM kendaraan
-              WHERE ID_Pemilik =(SELECT ID_Pemilik FROM pemilik
-              WHERE Email = '".$_SESSION['user_email']."'))";
-$tabel_pembelian = mysqli_query($mysqli, $query_pkb);
-
-
+// $query_pemilik = "SELECT * FROM pembelian WHERE Email = '".$_SESSION['user_email']."'";
+// $tabel_pemilik = mysqli_query($mysqli, $query_pemilik);
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -38,12 +34,15 @@ $tabel_pembelian = mysqli_query($mysqli, $query_pkb);
 <body class="g-sidenav-show  bg-gray-100">
 
 <?php 
- 	// cek apakah yang mengakses halaman ini sudah login
+ 
+	// cek apakah yang mengakses halaman ini sudah login
 if (isset($_SESSION['user_logged'])) {
-?>
+
+ 
+	?>
 
 
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href="https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.php" target="_blank">
@@ -115,7 +114,7 @@ if (isset($_SESSION['user_logged'])) {
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Histori</span>
+            <span class="nav-link-text ms-1">Transaksi</span>
           </a>
         </li>
        
@@ -146,7 +145,15 @@ if (isset($_SESSION['user_logged'])) {
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
     <!-- Navbar -->
-   
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
+          </ol>
+          <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+        </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
@@ -165,9 +172,81 @@ if (isset($_SESSION['user_logged'])) {
     <!-- End Navbar -->
 
 
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>CUSTOMER</h6>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 align-middle text-center text-sm">No Nota</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">No STNK</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Detail</th>
+            
+                    </tr>
+                  </thead>
+                 <tbody>
 
+                    <?php
+                    
+                    $query_pemilik = "SELECT * FROM pembelian WHERE Email = '".$_SESSION['user_email']."'";
+                    $tabel_pemilik = mysqli_query($mysqli, $query_pemilik);
+                     foreach ($tabel_pemilik as $data_pemilik) : 
+                     $cek = mysqli_query($mysqli, "SELECT * FROM pembayaran WHERE ID_PKB = '".$data_pemilik['id_pkb']."'");
+                    ?>
+                    <tr>
 
+                    
+                      <td class="align-middle text-center text-sm">
+                      <span class="text-s font-weight-bold mb-0">
+                      <?php echo $data_pemilik['no_nota_suku_cadang'];  ?> 
+                     </span>
+                    </td>
 
+                      <td class="align-middle text-center text-sm">
+                        <span class="text-s font-weight-bold mb-0">
+                        <?php echo $data_pemilik['no_stnk'];  ?> 
+                        </span>
+                      </td>
+
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-s font-weight-bold">
+                        <?php echo $data_pemilik['tgl_beli'];  ?> 
+                        </span>
+                      </td>
+
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-s font-weight-bold">
+                        <?php if(mysqli_num_rows($cek)>0){
+                                echo "SUDAH BAYAR" ;  
+                        }else{
+                          echo "BELUM BAYAR";
+                        }  ?> 
+                        </span>
+                      </td>
+
+                      <td class="align-middle text-center">
+                      <a href="nota.php?id=<?php echo $data_pemilik['id_pkb']; ?>" class="btn btn bg-gradient-info btn-sm">nota</a>
+                      </td>
+              
+                    </tr>
+                  </tbody>
+                  <?php
+                       endforeach
+                 ?>
+                </table>          
+              </div>          
+            </div>          
+          </div>         
+        </div>
+      </div>
 
  <!--   Core JS Files   -->
  <script src="../assets/js/core/popper.min.js"></script>

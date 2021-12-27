@@ -236,33 +236,11 @@ if (isset($_SESSION['user_logged'])) {
                $pembayaran =mysqli_query($mysqli, "INSERT INTO pembayaran (id_pkb, tgl_pembayaran, total_harga, bukti) VALUES 
                                                     ('$pkb','$tanggal', '$total', '$gambar')");
 
+
+
+                        echo "<script>location='histori.php';</script>";
               }
-
-              header('location: histori.php');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              ?>
+           ?>
 
 
 
