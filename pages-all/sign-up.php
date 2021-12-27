@@ -44,7 +44,8 @@ include_once('../config/database.php');
 					$query2 = mysqli_query($mysqli, "SELECT * FROM user WHERE email='$Email'");
 					if(mysqli_num_rows($query) == 0 && mysqli_num_rows($query2) == 0){
 						if($Kpassword == $Password){
-							$reg = mysqli_query($mysqli, "INSERT INTO user VALUES('', '$Username', '$Email', '$Password', 'User')");
+							$reg = mysqli_query($mysqli, "INSERT INTO user (username, email, password, role )
+                                            VALUES('$Username', '$Email', '$Password', 'User')");
 							if($reg){
 								echo '<script>alert("Pendaftaran berhasil");location.href="sign-in.php"</script>';
 							}

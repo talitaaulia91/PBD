@@ -34,8 +34,6 @@ include_once('../config/database.php');
 <?php 
  	// cek apakah yang mengakses halaman ini sudah login
 if (isset($_SESSION['user_logged'])) {
-  if(isset($_SESSION['cart'])){
-  
 ?>
 
 
@@ -158,7 +156,7 @@ if (isset($_SESSION['user_logged'])) {
           <div class="card mb-4">
             <div class="card-header pb-0">
 
-              <h6>KERANJANG</h6>
+              <h6>DETAIL PEMBELIAN</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -170,14 +168,12 @@ if (isset($_SESSION['user_logged'])) {
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                       <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subtotal</th>
-                      <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-            
-                    </tr>
+                
                   </thead>
                  <tbody>
 
                  <?php 
-             
+                 $total=0;
                  foreach ($_SESSION['cart'] as $id_suku_cadang => $jumlah):
                  $data_suku_cadang = $mysqli->query("SELECT * FROM suku_cadang
                                                     WHERE ID_Suku_Cadang ='$id_suku_cadang'");
@@ -215,28 +211,145 @@ if (isset($_SESSION['user_logged'])) {
                         Rp. <?php echo number_format($subtotal); ?>
                         </span>
                       </td>
-
-                      <td class="align-middle text-center">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" 
-                         href="hapus_keranjang.php?id=<?php echo $id_suku_cadang?>"><i class="far fa-trash-alt me-2"></i>Hapus</a>
-                      </td>
-                    </tr>
+                     </tr>
 
                     <?php
+                    $total+=$subtotal;
                     endforeach
-                    ?> 
-                  </tbody>
-               
-             
-                                    
-                </table>    
+                    ?>     
+
+                    </tbody>
+
+                    <tfoot>
+                   <tr>
+                     <th colspan="4" class="align-middle text-center" >
+                     <span class="text-s font-weight-bold md-8 mb-2">
+                       Total Belanja
+                    </span>
+                    </th>
+                     <th  class="align-middle text-center">Rp. <?php echo number_format($total);?></th>
+                   </tr>
+                  </tfoot>
+                 </table>    
               </div>          
             </div>          
           </div>         
         </div>
       </div>
 
-      <a href="cek.php"class="btn bg-gradient-info w-20 mt-4 mb-2">Checkout</a>
+              <div class="row col-md-6"> 
+                <h6 class="font-weight-bolder mb-0">Data Kendaraan</h6>
+                <form method="post" action="">
+                <div class="form-group  mb-0">
+                <label for="exampleInputEmail1">NO STNK</label>
+                <input type="text" name="no_stnk"class="form-control" placeholder="Masukkan Nomor STNK">
+                </div>
+
+                <div class="form-group  mb-0">
+                <label for="exampleInputPassword1">Tipe Kendaraan</label>
+                    <select class="form-select" name="id_tipe">
+                        <option value="">Pilih Tipe kendaraan</option>
+                            <?php
+                            $tipe_kendaraan = $mysqli->query("SELECT * FROM tipe_kendaraan");
+                            while ( $tipe = $tipe_kendaraan->fetch_assoc()){
+                            ?>
+                            <option value="<?php echo $tipe['ID_tipe'] ?>">
+                              <?php 
+                              echo $tipe['nama_tipe'];
+                              ?>
+                            </option>
+                            <?php } ?>
+                    </select>
+                </div>
+                
+                <div class="form-group  mb-0">
+                <label for="exampleInputPassword1">No Rangka</label>
+                <input type="text" name="no_rangka"class="form-control" placeholder="Masukkan no rangka" >
+                </div>
+
+                <div class="form-group  mb-0">
+                <label for="exampleInputPassword1">No Mesin</label>
+                <input type="text" name="no_mesin"class="form-control" placeholder="Masukkan no mesin" >
+                </div>
+
+                <div class="form-group  mb-0">
+                <label for="exampleInputPassword1">Tahun</label>
+                <input type="text" name="tahun"class="form-control" placeholder="Masukkan tahun" >
+                </div>
+
+                <div class="form-group  mb-0">
+                <label for="exampleInputPassword1">Warna</label>
+                <input type="text" name="warna"class="form-control" placeholder="Masukkan warna kendaraan" >
+                </div>
+                <button type="submit" name="checkout" value="checkout" class="btn bg-gradient-info w-30 mt-4 mb-2">Beli Sekarang</button>
+              </form>
+              </div>
+              </div>
+
+            
+
+              <?php
+                if(isset($_POST['checkout'])){
+                $email          = $_SESSION['user_email'];
+                $no_stnk        = $_POST['no_stnk'];
+                $id_tipe        = $_POST['id_tipe'];
+                $no_rangka      = $_POST['no_rangka'];
+                $no_mesin       = $_POST['no_mesin'];
+                $tahun          = $_POST['tahun'];
+                $warna          = $_POST['warna'];
+                
+                date_default_timezone_set("Asia/jakarta");
+                $tanggal        = date("Y-m-d");             
+                $jam            = date('H:i:s');
+
+
+
+                $cek_kendaraan = mysqli_query($mysqli, "SELECT * FROM kendaraan WHERE NO_STNK='$no_stnk'");
+                $cek =mysqli_num_rows($cek_kendaraan);
+
+                if($cek < 1){
+                  $pemilik   = mysqli_query($mysqli, "SELECT * FROM pemilik WHERE Email='".$_SESSION['user_email']."'");
+                  $row_pemilik = $pemilik->fetch_assoc();
+                  $id_customer = $row_pemilik['ID_Pemilik'];
+
+                     //insert kendaraan
+                    $kendaraan   = mysqli_query($mysqli, "INSERT INTO kendaraan VALUES
+                    ('$no_stnk', '$id_customer','$id_tipe', '$no_mesin', '$no_rangka', '$tahun', '$warna')");
+                }
+
+
+  
+                //insert nota
+                $nota        = mysqli_query($mysqli,"INSERT INTO nota_suku_cadang (Tgl_Nota_Suku_Cadang)
+                                                     VALUES ('$tanggal')");
+
+
+                //ambiil no nota
+                $no_nota     = mysqli_query($mysqli,"SELECT No_Nota_Suku_Cadang FROM nota_suku_cadang
+                                                     ORDER BY No_Nota_Suku_Cadang DESC LIMIT 1");
+                $row_nota    = $no_nota->fetch_assoc();
+                $no_nota_sc  = $row_nota['No_Nota_Suku_Cadang'];
+
+
+                //insert detail  nota
+                foreach ($_SESSION['cart'] as $id_suku_cadang => $jumlah){
+                $detail      = mysqli_query($mysqli, "INSERT INTO detail_nota_suku_cadang VALUES
+                                                      ('$no_nota_sc', '$id_suku_cadang', '$jumlah')");
+                }
+
+
+                //insert pkb
+                $pkb         = mysqli_query($mysqli, "INSERT INTO pkb (NO_STNK, No_Nota_Suku_Cadang, Tgl_beli, Jam_beli)
+                                                      VALUES ('$no_stnk', '$no_nota_sc', '$tanggal', '$jam')");
+
+                                        
+                
+
+
+
+
+              }
+              ?>
                
 
 
@@ -435,10 +548,6 @@ if (isset($_SESSION['user_logged'])) {
 </html>
 
 <?php
-  }else{
-    echo "<script>alert('Keranjang kosong, pilih produk!');</script>";
-    echo "<script>location='suku_cadang.php';</script>";
-  }
 } else {
     header('location: sign-in.php');
 }
