@@ -1,11 +1,15 @@
 <?php
+session_start();
 include_once('../config/database.php');
-$query_suku_cadang = "SELECT * FROM suku_cadang";
-$tabel_suku_cadang = mysqli_query($mysqli, $query_suku_cadang);
-$counter = 1;
+$query_pkb = "SELECT * FROM pkb WHERE
+              NO_STNK IN (SELECT NO_STNK FROM kendaraan
+              WHERE ID_Pemilik =(SELECT ID_Pemilik FROM pemilik
+              WHERE Email = '".$_SESSION['user_email']."'))";
+$tabel_pembelian = mysqli_query($mysqli, $query_pkb);
+
+
+
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -34,13 +38,9 @@ $counter = 1;
 <body class="g-sidenav-show  bg-gray-100">
 
 <?php 
-	session_start();
- 
-	// cek apakah yang mengakses halaman ini sudah login
+ 	// cek apakah yang mengakses halaman ini sudah login
 if (isset($_SESSION['user_logged'])) {
-
- 
-	?>
+?>
 
 
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
@@ -57,7 +57,7 @@ if (isset($_SESSION['user_logged'])) {
 
 
         <li class="nav-item">
-          <a class="nav-link active" href="suku_cadang.php">
+          <a class="nav-link" href="suku_cadang.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -76,7 +76,7 @@ if (isset($_SESSION['user_logged'])) {
             <span class="nav-link-text ms-1">Suku cadang</span>
           </a>
         </li>
-       
+
 
         <li class="nav-item">
           <a class="nav-link " href="keranjang.php">
@@ -99,7 +99,7 @@ if (isset($_SESSION['user_logged'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="histori.php">
+          <a class="nav-link active" href="histori.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -118,6 +118,7 @@ if (isset($_SESSION['user_logged'])) {
             <span class="nav-link-text ms-1">Histori</span>
           </a>
         </li>
+       
 
 
         <li class="nav-item">
@@ -145,15 +146,7 @@ if (isset($_SESSION['user_logged'])) {
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
     <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
-          </ol>
-          <h6 class="font-weight-bolder mb-0">Dashboard</h6>
-        </nav>
+   
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
@@ -173,58 +166,11 @@ if (isset($_SESSION['user_logged'])) {
 
 
 
-    
-    <div class="card mb-3">
-            <div class="card-body">
-              <div class="row">
-
-              <?php 
-		while($spare = mysqli_fetch_array($tabel_suku_cadang)){ ?>
-
-                <div class="mb-3 col-md-8 col-lg-3">
-                  <div class="border rounded h-100 d-flex flex-column justify-content-between pb-3">
-                    <div class="overflow-hidden">
-                      <div class="position-relative rounded-top overflow-hidden">
-                          <img class="img-fluid rounded-top" style="width:100%; height: 200px; object-fit:cover;" 
-                               src="../assets/img/<?=$spare['gambar'] ?>" alt="">
-                          <span class="badge badge-pill badge-success position-absolute r-0 t-0 mt-2 mr-2 z-index-2">New</span>
-                        </div> 
-
-                        <div class="p-3">
-                        <h5 class="fs-0"><a class="text-dark" href="../e-commerce/product-details.html">
-                          <?= $spare['Nama_Suku_cadang']  ?>
-                        </a></h5>
-                        
-                        <h5 class="fs-md-2 text-warning mb-0 d-flex align-items-center mb-3"> Rp 
-                          <?php echo number_format($spare['Harga_Satuan'], 2, ',', '.') ?>
-                        </h5>
-
-                        <p class="fs--1 mb-1">Stock: <?= (($spare['stok'] >= 1) ? '<strong class="text-success">Available</strong>' : '<strong class="text-danger">Unvailable</strong>') ?></p>
-
-                        <a href="beli.php?id=<?php echo $spare['ID_Suku_Cadang']; ?>"class="btn bg-gradient-info w-100 mt-4 mb-0">Masukkan keranjang</a>
-                      
-                      
-                      </div>
-                    </div>
-                   
-                  </div>
-                </div>
-                <?php }?>
-              </div>
-            </div>       
-          </div>
 
 
 
-
-
-
-
-
-
-
-   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
+ <!--   Core JS Files   -->
+ <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
@@ -418,6 +364,22 @@ if (isset($_SESSION['user_logged'])) {
 
 <?php
 } else {
-    header('location: ../pages-all/sign-in.php');
+    header('location: sign-in.php');
 }
 ?>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

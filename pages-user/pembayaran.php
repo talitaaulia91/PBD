@@ -1,11 +1,9 @@
 <?php
+session_start();
+
 include_once('../config/database.php');
-$query_suku_cadang = "SELECT * FROM suku_cadang";
-$tabel_suku_cadang = mysqli_query($mysqli, $query_suku_cadang);
-$counter = 1;
+
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -34,13 +32,9 @@ $counter = 1;
 <body class="g-sidenav-show  bg-gray-100">
 
 <?php 
-	session_start();
- 
-	// cek apakah yang mengakses halaman ini sudah login
+ 	// cek apakah yang mengakses halaman ini sudah login
 if (isset($_SESSION['user_logged'])) {
-
- 
-	?>
+?>
 
 
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
@@ -57,7 +51,7 @@ if (isset($_SESSION['user_logged'])) {
 
 
         <li class="nav-item">
-          <a class="nav-link active" href="suku_cadang.php">
+          <a class="nav-link" href="suku_cadang.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -76,10 +70,10 @@ if (isset($_SESSION['user_logged'])) {
             <span class="nav-link-text ms-1">Suku cadang</span>
           </a>
         </li>
-       
+
 
         <li class="nav-item">
-          <a class="nav-link " href="keranjang.php">
+          <a class="nav-link" href="keranjang.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -99,7 +93,7 @@ if (isset($_SESSION['user_logged'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="histori.php">
+          <a class="nav-link active" href="histori.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -118,6 +112,7 @@ if (isset($_SESSION['user_logged'])) {
             <span class="nav-link-text ms-1">Histori</span>
           </a>
         </li>
+       
 
 
         <li class="nav-item">
@@ -147,13 +142,7 @@ if (isset($_SESSION['user_logged'])) {
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
-          </ol>
-          <h6 class="font-weight-bolder mb-0">Dashboard</h6>
-        </nav>
+    
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
@@ -172,47 +161,84 @@ if (isset($_SESSION['user_logged'])) {
     <!-- End Navbar -->
 
 
-
+    <?php
     
-    <div class="card mb-3">
-            <div class="card-body">
-              <div class="row">
+        function getTotal($order_id){
+            include('../config/database.php');
+            $detail = mysqli_query($mysqli, "SELECT * FROM detail_nota_suku_cadang a
+                                        INNER JOIN suku_cadang b ON a.ID_Suku_Cadang = b.ID_Suku_Cadang
+                                        WHERE a.No_Nota_Suku_Cadang = '$order_id'");
+            
 
-              <?php 
-		while($spare = mysqli_fetch_array($tabel_suku_cadang)){ ?>
+            $total = 0;
+            while($d = mysqli_fetch_array($detail)){
+                $total += ($d['Harga_Satuan'] * $d['Banyak']);
+            }
 
-                <div class="mb-3 col-md-8 col-lg-3">
-                  <div class="border rounded h-100 d-flex flex-column justify-content-between pb-3">
-                    <div class="overflow-hidden">
-                      <div class="position-relative rounded-top overflow-hidden">
-                          <img class="img-fluid rounded-top" style="width:100%; height: 200px; object-fit:cover;" 
-                               src="../assets/img/<?=$spare['gambar'] ?>" alt="">
-                          <span class="badge badge-pill badge-success position-absolute r-0 t-0 mt-2 mr-2 z-index-2">New</span>
-                        </div> 
+            return $total;
 
-                        <div class="p-3">
-                        <h5 class="fs-0"><a class="text-dark" href="../e-commerce/product-details.html">
-                          <?= $spare['Nama_Suku_cadang']  ?>
-                        </a></h5>
-                        
-                        <h5 class="fs-md-2 text-warning mb-0 d-flex align-items-center mb-3"> Rp 
-                          <?php echo number_format($spare['Harga_Satuan'], 2, ',', '.') ?>
-                        </h5>
+         
+            }
+            $pkb = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM pkb WHERE ID_PKB = '".$_GET['id']."'"));
+    ?>
 
-                        <p class="fs--1 mb-1">Stock: <?= (($spare['stok'] >= 1) ? '<strong class="text-success">Available</strong>' : '<strong class="text-danger">Unvailable</strong>') ?></p>
+<div class="container-fluid py-1 px-5">
+                <h3 class="mb-3">Pembayaran</h3>
 
-                        <a href="beli.php?id=<?php echo $spare['ID_Suku_Cadang']; ?>"class="btn bg-gradient-info w-100 mt-4 mb-0">Masukkan keranjang</a>
-                      
-                      
-                      </div>
+            <table class="table table-bordered bg-white">
+                <tr>
+                    <th>No. Nota</th>
+                    <th><?= $pkb['No_Nota_Suku_Cadang'] ?></th>
+                </tr>
+                <tr>
+                    <th>TOTAL</th>
+                    <th><?= getTotal($pkb['No_Nota_Suku_Cadang']) ?></th>
+                </tr>
+            </table>
+        </div>
+
+
+              <div class="container-fluid py-1 px-5">
+              <div class="row col-md-6"> 
+              <h6 class="font-weight-bolder mb-0">Pembayaran</h6>
+              <form method="post" action="" enctype="multipart/form-data">
+                    <div class="form-group  mb-0">
+                    <label for="exampleInputPassword1">Bukti Bayar</label>
+                    <input type="file" name="gambar"class="form-control">
                     </div>
-                   
-                  </div>
-                </div>
-                <?php }?>
+      
+                <button type="submit" name="bayar" value="bayar" class="btn bg-gradient-info w-30 mt-4 mb-2">KONFIRMASI</button>
+              </form>
               </div>
-            </div>       
-          </div>
+              </div>
+              </div>
+
+
+              <?php
+                if(isset($_POST['bayar'])){
+
+                $o = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM pkb WHERE ID_PKB = '".$_GET['id']."'"));
+
+
+                $pkb            = $_GET['id'];
+                $total          = getTotal($o['No_Nota_Suku_Cadang']);
+                $gambar         = $_FILES['gambar']['name'];
+                $lokasi         = $_FILES['gambar']['tmp_name'];
+
+                date_default_timezone_set("Asia/jakarta");
+                $tanggal        = date("Y-m-d"); 
+
+                move_uploaded_file($lokasi, '../assets/img/bukti/'.$gambar);
+
+        
+
+
+               $pembayaran =mysqli_query($mysqli, "INSERT INTO pembayaran (id_pkb, tgl_pembayaran, total_harga, bukti) VALUES 
+                                                    ('$pkb','$tanggal', '$total', '$gambar')");
+
+              }
+
+              header('location: histori.php');
 
 
 
@@ -223,8 +249,27 @@ if (isset($_SESSION['user_logged'])) {
 
 
 
-   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              ?>
+
+
+
+
+
+ <!--   Core JS Files   -->
+ <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
@@ -418,6 +463,22 @@ if (isset($_SESSION['user_logged'])) {
 
 <?php
 } else {
-    header('location: ../pages-all/sign-in.php');
+    header('location: sign-in.php');
 }
 ?>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

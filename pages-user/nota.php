@@ -1,11 +1,9 @@
-<?php
+!<?php
+session_start();
+
 include_once('../config/database.php');
-$query_suku_cadang = "SELECT * FROM suku_cadang";
-$tabel_suku_cadang = mysqli_query($mysqli, $query_suku_cadang);
-$counter = 1;
+
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -34,13 +32,9 @@ $counter = 1;
 <body class="g-sidenav-show  bg-gray-100">
 
 <?php 
-	session_start();
- 
-	// cek apakah yang mengakses halaman ini sudah login
+ 	// cek apakah yang mengakses halaman ini sudah login
 if (isset($_SESSION['user_logged'])) {
-
- 
-	?>
+?>
 
 
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
@@ -57,7 +51,7 @@ if (isset($_SESSION['user_logged'])) {
 
 
         <li class="nav-item">
-          <a class="nav-link active" href="suku_cadang.php">
+          <a class="nav-link" href="suku_cadang.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -76,10 +70,10 @@ if (isset($_SESSION['user_logged'])) {
             <span class="nav-link-text ms-1">Suku cadang</span>
           </a>
         </li>
-       
+
 
         <li class="nav-item">
-          <a class="nav-link " href="keranjang.php">
+          <a class="nav-link active" href="keranjang.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -98,26 +92,7 @@ if (isset($_SESSION['user_logged'])) {
             <span class="nav-link-text ms-1">Keranjang</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="histori.php">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>office</title>
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                    <g transform="translate(1716.000000, 291.000000)">
-                      <g id="office" transform="translate(153.000000, 2.000000)">
-                        <path class="color-background opacity-6" d="M12.25,17.5 L8.75,17.5 L8.75,1.75 C8.75,0.78225 9.53225,0 10.5,0 L31.5,0 C32.46775,0 33.25,0.78225 33.25,1.75 L33.25,12.25 L29.75,12.25 L29.75,3.5 L12.25,3.5 L12.25,17.5 Z"></path>
-                        <path class="color-background" d="M40.25,14 L24.5,14 C23.53225,14 22.75,14.78225 22.75,15.75 L22.75,38.5 L19.25,38.5 L19.25,22.75 C19.25,21.78225 18.46775,21 17.5,21 L1.75,21 C0.78225,21 0,21.78225 0,22.75 L0,40.25 C0,41.21775 0.78225,42 1.75,42 L40.25,42 C41.21775,42 42,41.21775 42,40.25 L42,15.75 C42,14.78225 41.21775,14 40.25,14 Z M12.25,36.75 L7,36.75 L7,33.25 L12.25,33.25 L12.25,36.75 Z M12.25,29.75 L7,29.75 L7,26.25 L12.25,26.25 L12.25,29.75 Z M35,36.75 L29.75,36.75 L29.75,33.25 L35,33.25 L35,36.75 Z M35,29.75 L29.75,29.75 L29.75,26.25 L35,26.25 L35,29.75 Z M35,22.75 L29.75,22.75 L29.75,19.25 L35,19.25 L35,22.75 Z"></path>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </div>
-            <span class="nav-link-text ms-1">Histori</span>
-          </a>
-        </li>
+       
 
 
         <li class="nav-item">
@@ -147,13 +122,6 @@ if (isset($_SESSION['user_logged'])) {
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
-          </ol>
-          <h6 class="font-weight-bolder mb-0">Dashboard</h6>
-        </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
@@ -171,60 +139,99 @@ if (isset($_SESSION['user_logged'])) {
     </nav>
     <!-- End Navbar -->
 
+    <?php
+     $pembelian = mysqli_query($mysqli, "SELECT * FROM pembelian WHERE id_pkb ='".$_GET['id']."' " );
+     $ambil_data = $pembelian->fetch_assoc();
+
+     $cek = mysqli_query($mysqli, "SELECT * FROM pembayaran WHERE ID_PKB = '".$_GET['id']."'");
+
+    ?>
+
+        <table class="table table-bordered bg-white ">
+        <thead>
+        <tr>
+            <th>No. Nota</th>    
+            <th><?=$ambil_data['no_nota_suku_cadang'] ?></th>
+        </tr>
+        <tr>
+            <th>Pembeli</th>    
+            <th><?= $ambil_data['nama_pemilik'] ?></th>
+        </tr>
+        <tr>
+            <th>No STNK</th>    
+            <th><?= $ambil_data['no_stnk'] ?></th>
+        </tr>
+        <tr>
+            <th>Tanggal Transaksi</th>    
+            <th><?= $ambil_data['tgl_beli'] ?></th>
+        </tr>
+        <tr>
+            <th>Status</th>    
+            <th>
+            <?php 
+            if(mysqli_num_rows($cek) < 1){ echo 'BELUM BAYAR'; }else{ echo 'SUDAH BAYAR'; } ?>
+            </th>
+        </tr>
+    </thead>
+    </table>
 
 
-    
-    <div class="card mb-3">
-            <div class="card-body">
-              <div class="row">
-
-              <?php 
-		while($spare = mysqli_fetch_array($tabel_suku_cadang)){ ?>
-
-                <div class="mb-3 col-md-8 col-lg-3">
-                  <div class="border rounded h-100 d-flex flex-column justify-content-between pb-3">
-                    <div class="overflow-hidden">
-                      <div class="position-relative rounded-top overflow-hidden">
-                          <img class="img-fluid rounded-top" style="width:100%; height: 200px; object-fit:cover;" 
-                               src="../assets/img/<?=$spare['gambar'] ?>" alt="">
-                          <span class="badge badge-pill badge-success position-absolute r-0 t-0 mt-2 mr-2 z-index-2">New</span>
-                        </div> 
-
-                        <div class="p-3">
-                        <h5 class="fs-0"><a class="text-dark" href="../e-commerce/product-details.html">
-                          <?= $spare['Nama_Suku_cadang']  ?>
-                        </a></h5>
-                        
-                        <h5 class="fs-md-2 text-warning mb-0 d-flex align-items-center mb-3"> Rp 
-                          <?php echo number_format($spare['Harga_Satuan'], 2, ',', '.') ?>
-                        </h5>
-
-                        <p class="fs--1 mb-1">Stock: <?= (($spare['stok'] >= 1) ? '<strong class="text-success">Available</strong>' : '<strong class="text-danger">Unvailable</strong>') ?></p>
-
-                        <a href="beli.php?id=<?php echo $spare['ID_Suku_Cadang']; ?>"class="btn bg-gradient-info w-100 mt-4 mb-0">Masukkan keranjang</a>
-                      
-                      
-                      </div>
-                    </div>
-                   
-                  </div>
-                </div>
-                <?php }?>
-              </div>
-            </div>       
-          </div>
+ 
 
 
 
+    <table class="table table-bordered bg-white">
+    <thead>
+        <tr>
+            <th>ID</th>    
+            <th>Barang</th>
+            <th>Harga</th>
+            <th>Jumlah</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+                 $nsc = mysqli_query($mysqli, "SELECT sc.ID_Suku_Cadang, sc.Nama_Suku_cadang, 
+                                               sc.Harga_Satuan, dn.Banyak FROM suku_cadang sc, detail_nota_suku_cadang dn
+                                        WHERE sc.ID_suku_Cadang = dn.ID_Suku_Cadang AND
+                                        No_Nota_suku_Cadang = (SELECT No_Nota_Suku_Cadang 
+                                        FROM pkb WHERE ID_PKB = '".$_GET['id']."')");
+               
+                 $total=0;
+                 foreach ($nsc as $data):
+                 $subtotal = $data['Harga_Satuan']*$data['Banyak'];
+              
+                echo '<tr>
+                        <td>'.$data['ID_Suku_Cadang'].'</td>
+                        <td>'.$data['Nama_Suku_cadang'].'</td>
+                        <td>'.number_format($data['Harga_Satuan']).'</td>
+                        <td>'. $data['Banyak'].'</td>
+                        <td>'.number_format($subtotal).'</td>
+                      </tr>';
+            $total+=$subtotal;
+            endforeach
+        ?>
+        <tr>
+            <th colspan="4" class="text-right">TOTAL</th>
+            <th><?= number_format($total) ?></th>
+        </tr>
+    </tbody>
+</table>
+
+
+<?php
+$id = $_GET['id'];
+?>
+
+<a class="btn bg-gradient-info w-10 mt-4 mb-3" href="pembayaran.php?id=<?php echo $id; ?>">BAYAR</a>
+
+               
 
 
 
-
-
-
-
-   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
+ <!--   Core JS Files   -->
+ <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
@@ -418,6 +425,22 @@ if (isset($_SESSION['user_logged'])) {
 
 <?php
 } else {
-    header('location: ../pages-all/sign-in.php');
+    header('location: sign-in.php');
 }
 ?>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

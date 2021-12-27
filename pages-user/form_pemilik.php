@@ -120,15 +120,7 @@ if (isset($_SESSION['user_logged'])) {
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
     <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
-          </ol>
-          <h6 class="font-weight-bolder mb-0">Dashboard</h6>
-        </nav>
+   
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
@@ -148,95 +140,6 @@ if (isset($_SESSION['user_logged'])) {
 
 
 
-
-
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-
-              <h6>DETAIL PEMBELIAN</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 align-middle text-center text-sm">ID produk</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Produk</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
-                      <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subtotal</th>
-                
-                  </thead>
-                 <tbody>
-
-                 <?php 
-                 $total=0;
-                 foreach ($_SESSION['cart'] as $id_suku_cadang => $jumlah):
-                 $data_suku_cadang = $mysqli->query("SELECT * FROM suku_cadang
-                                                    WHERE ID_Suku_Cadang ='$id_suku_cadang'");
-                 $ambil_data = $data_suku_cadang->fetch_assoc();
-                 $subtotal = $ambil_data['Harga_Satuan']*$jumlah;
-            
-
-                 ?>
-                    <tr>
-                      <td class="align-middle text-center text-sm">
-                      <span class="text-s font-weight-bold mb-0">
-                      <?php echo $ambil_data['ID_Suku_Cadang']; ?>
-                     </span>
-                    </td>
-
-
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-s font-weight-bold mb-0">
-                        <?php echo $ambil_data['Nama_Suku_cadang']; ?>
-                        </span>
-                      </td>
-
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-s font-weight-bold">
-                        Rp. <?php echo number_format($ambil_data['Harga_Satuan']); ?>
-                        </span>
-                      </td>
-
-                      <td class="align-middle text-center">
-                      <?php echo $jumlah; ?>
-                      </td> 
-                      
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-s font-weight-bold">
-                        Rp. <?php echo number_format($subtotal); ?>
-                        </span>
-                      </td>
-                     </tr>
-
-                    <?php
-                    $total+=$subtotal;
-                    endforeach
-                    ?>     
-
-                    </tbody>
-
-                    <tfoot>
-                   <tr>
-                     <th colspan="4" class="align-middle text-center" >
-                     <span class="text-s font-weight-bold md-8 mb-2">
-                       Total Belanja
-                    </span>
-                    </th>
-                     <th  class="align-middle text-center">Rp. <?php echo number_format($total);?></th>
-                   </tr>
-                  </tfoot>
-                 </table>    
-              </div>          
-            </div>          
-          </div>         
-        </div>
-      </div>
-   
 
               <div class="row col-md-6"> 
               <h6 class="font-weight-bolder mb-0">Data Customer</h6>
@@ -369,7 +272,7 @@ if (isset($_SESSION['user_logged'])) {
 
                                         
                 
-
+              echo "<script>location='nota.php?id=$id';</script>";
 
 
 
