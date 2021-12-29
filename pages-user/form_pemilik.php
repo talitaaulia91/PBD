@@ -120,7 +120,9 @@ if (isset($_SESSION['user_logged'])) {
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
     <!-- Navbar -->
-   
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+      <div class="container-fluid py-1 px-3">
+    
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
@@ -141,7 +143,7 @@ if (isset($_SESSION['user_logged'])) {
 
 
 
-              <div class="row col-md-6"> 
+    <div class="row col-md-6"> 
               <h6 class="font-weight-bolder mb-0">Data Customer</h6>
               <form method="post" action="">
                 <div class="form-group form mb-0">
@@ -270,8 +272,15 @@ if (isset($_SESSION['user_logged'])) {
                 $pkb         = mysqli_query($mysqli, "INSERT INTO pkb (NO_STNK, No_Nota_Suku_Cadang, Tgl_beli, Jam_beli)
                                                       VALUES ('$no_stnk', '$no_nota_sc', '$tanggal', '$jam')");
 
+               //ambiil id pkb
+               $id_pkb     = mysqli_query($mysqli,"SELECT ID_PKB FROM pkb
+               ORDER BY ID_PKB DESC LIMIT 1");
+                  $row_pkb    = $id_pkb->fetch_assoc();
+                  $id  = $row_pkb['ID_PKB'];
+
                                         
                 
+
               echo "<script>location='nota.php?id=$id';</script>";
 
 

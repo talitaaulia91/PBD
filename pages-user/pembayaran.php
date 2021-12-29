@@ -222,6 +222,11 @@ if (isset($_SESSION['user_logged'])) {
 
                 $pkb            = $_GET['id'];
                 $total          = getTotal($o['No_Nota_Suku_Cadang']);
+
+
+
+
+                
                 $gambar         = $_FILES['gambar']['name'];
                 $lokasi         = $_FILES['gambar']['tmp_name'];
 

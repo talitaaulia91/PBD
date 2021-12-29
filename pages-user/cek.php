@@ -12,9 +12,4 @@ include_once('../config/database.php');
 		    header('location: form_pemilik.php');
 	}
 
-
-
-
-
-
 ?>
