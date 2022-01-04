@@ -224,7 +224,10 @@ if (isset($_SESSION['user_logged'])) {
 $id = $_GET['id'];
 ?>
 
-<a class="btn bg-gradient-info w-10 mt-4 mb-3" href="pembayaran.php?id=<?php echo $id; ?>">BAYAR</a>
+<?php if(mysqli_num_rows($cek) < 1){ ?>
+  <a class="btn bg-gradient-info w-10 mt-4 mb-3" href="pembayaran.php?id=<?php echo $id; ?>">BAYAR</a>
+<?php } ?>
+
 
                
 

@@ -9,7 +9,7 @@ if (isset($_SESSION['user_logged'])) {
  
 if (isset($_POST['login'])) {
 	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$password = (md5($_POST['password']));
 
 	$cek = mysqli_query($mysqli, "SELECT * FROM user WHERE 
 								  username = '" . $username . "' 

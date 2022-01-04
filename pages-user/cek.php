@@ -9,7 +9,7 @@ include_once('../config/database.php');
 	if($cek > 0){
 			header('location:form_kendaraan.php');
 	}else{
-		    header('location: form_pemilik.php');
+		    header('location:form_pemilik.php');
 	}
 
 ?>

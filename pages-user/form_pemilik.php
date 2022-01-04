@@ -278,9 +278,6 @@ if (isset($_SESSION['user_logged'])) {
                   $row_pkb    = $id_pkb->fetch_assoc();
                   $id  = $row_pkb['ID_PKB'];
 
-                                        
-                
-
               echo "<script>location='nota.php?id=$id';</script>";
 
 

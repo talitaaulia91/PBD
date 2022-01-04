@@ -37,8 +37,8 @@ include_once('../config/database.php');
 										
 					$Username	    = ($_POST['username']);
 					$Email	    	= ($_POST['email']);
-					$Password	    = ($_POST['password']);
-					$Kpassword	  = ($_POST['kpassword']);
+					$Password	    = (md5($_POST['password']));
+					$Kpassword	  = (md5($_POST['kpassword']));
 					
 					$query = mysqli_query($mysqli, "SELECT * FROM user WHERE username='$Username'");
 					$query2 = mysqli_query($mysqli, "SELECT * FROM user WHERE email='$Email'");
