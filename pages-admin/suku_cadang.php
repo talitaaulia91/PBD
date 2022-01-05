@@ -1,10 +1,13 @@
 <?php
 include_once('../config/database.php');
-$query_suku_cadang = "SELECT * FROM suku_cadang";
-$tabel_suku_cadang = mysqli_query($mysqli, $query_suku_cadang);
-$counter = 1;
-?>
 
+if(isset($_GET['cari'])){
+  $cari = $_GET['cari'];
+  $tabel_suku_cadang = mysqli_query($mysqli,"SELECT * FROM suku_cadang WHERE nama_suku_cadang LIKE '%".$cari."%'");				
+}else{
+  $tabel_suku_cadang = mysqli_query($mysqli,"SELECT * FROM suku_cadang");	
+}
+?>
 
 
 
@@ -197,8 +200,11 @@ if (isset($_SESSION['user_logged'])) {
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
+              <form action="" method="GET">
+              <!-- <span class="input-group-text text-body" ><i class="fas fa-search" aria-hidden="true"></i></span> -->
+              <input type="text" name="cari" class="form-control" placeholder="Type here...">
+              <input type="submit" class="form-control" value="cari">
+              </form>
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
@@ -237,7 +243,9 @@ if (isset($_SESSION['user_logged'])) {
                  <tbody>
 
                     <?php
-                     foreach ($tabel_suku_cadang as $data_suku_cadang) : 
+
+$counter = 1;
+                     while($data_suku_cadang = mysqli_fetch_array($tabel_suku_cadang)){ 
                     ?>
                     <tr>
 
@@ -284,8 +292,7 @@ if (isset($_SESSION['user_logged'])) {
                   </tbody>
                   <?php
                        $counter++;
-                       endforeach
-                 ?>
+                       } ?>
                 </table>          
               </div>          
             </div>          
