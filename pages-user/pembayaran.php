@@ -235,15 +235,16 @@ if (isset($_SESSION['user_logged'])) {
 
                 move_uploaded_file($lokasi, '../assets/img/bukti/'.$gambar);
 
-        
-
-
-               $pembayaran =mysqli_query($mysqli, "INSERT INTO pembayaran (id_pkb, tgl_pembayaran, total_harga, bukti) VALUES 
+                if($gambar == null){
+                  echo "<script> alert('Lampirkan bukti pembayaran!'); </script>";
+                }else{
+                $pembayaran =mysqli_query($mysqli, "INSERT INTO pembayaran (id_pkb, tgl_pembayaran, total_harga, bukti) VALUES 
                                                     ('$pkb','$tanggal', '$total', '$gambar')");
 
-
+              
 
                         echo "<script>location='histori.php';</script>";
+              }
               }
            ?>
 
