@@ -162,7 +162,6 @@ if (isset($_SESSION['user_logged'])) {
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             <div class="input-group">
               <form action="" method="GET">
-              <!-- <span class="input-group-text text-body" ><i class="fas fa-search" aria-hidden="true"></i></span> -->
               <input type="text" name="cari" class="form-control" placeholder="Type here...">
               <input type="submit" class="form-control" value="cari">
               </form>
@@ -172,7 +171,9 @@ if (isset($_SESSION['user_logged'])) {
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none">
+                <?php echo "Halo, ".$_SESSION['user_name'];?>
+                </span>
               </a>
             </li>
     </nav>

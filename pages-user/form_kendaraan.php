@@ -134,7 +134,9 @@ if (isset($_SESSION['user_logged'])) {
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none">
+                <?php echo "Halo, ".$_SESSION['user_name'];?>
+                </span>
               </a>
             </li>
     </nav>
@@ -257,7 +259,10 @@ if (isset($_SESSION['user_logged'])) {
                 $id_pkb     = mysqli_query($mysqli,"SELECT ID_PKB FROM pkb
                                                      ORDER BY ID_PKB DESC LIMIT 1");
                 $row_pkb    = $id_pkb->fetch_assoc();
-                $id  = $row_pkb['ID_PKB'];
+                $id         = $row_pkb['ID_PKB'];
+
+                unset($_SESSION['cart']);
+
                 
                 echo "<script>location='nota.php?id=$id';</script>";
 

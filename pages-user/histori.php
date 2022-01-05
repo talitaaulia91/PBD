@@ -114,7 +114,7 @@ if (isset($_SESSION['user_logged'])) {
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Transaksi</span>
+            <span class="nav-link-text ms-1">Histori</span>
           </a>
         </li>
        
@@ -165,7 +165,9 @@ if (isset($_SESSION['user_logged'])) {
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none">
+                  <?php echo "Halo, ".$_SESSION['user_name'];?>
+                </span>
               </a>
             </li>
     </nav>

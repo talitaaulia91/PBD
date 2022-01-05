@@ -29,7 +29,8 @@ if (isset($_POST['login'])) {
 			header('location:../pages-admin/dashboard.php');
 		}		
 	} else {
-		echo '<p style="color: red">Username atau Password salah!</p>';
+		echo "<script> alert('Username atau password salah!'); </script>";
+		echo "<script> location='sign-in.php'; </script>";
 	}
 }
 ?>

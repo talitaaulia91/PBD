@@ -206,7 +206,9 @@ if (isset($_SESSION['user_logged'])) {
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none">
+                <?php echo "Halo, ".$_SESSION['user_name'];?>
+                </span>
               </a>
             </li>
     </nav>
@@ -229,7 +231,7 @@ if (isset($_SESSION['user_logged'])) {
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 align-middle text-center text-sm">Jabatan</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Telepon</th>
-                      <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                      <!-- <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th> -->
             
                     </tr>
                   </thead>
@@ -274,10 +276,10 @@ if (isset($_SESSION['user_logged'])) {
                         </span>
                       </td>
 
-                      <td class="align-middle text-center">
+                      <!-- <td class="align-middle text-center">
                       <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                       <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      </td>                  
+                      </td>                   -->
                     </tr>
                   </tbody>
                   <?php

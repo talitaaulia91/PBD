@@ -211,13 +211,13 @@ if (isset($_SESSION['user_logged'])) {
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none"> 
+                  <?php echo "Halo, ".$_SESSION['user_name'];?>
+                </span>
               </a>
             </li>
     </nav>
     <!-- End Navbar -->
-
-
    
     <div class="container-fluid py-4">
     <a class="btn bg-gradient-info w-10 mt-4 mb-3" href="create_suku_cadang.php">ADD +</a>

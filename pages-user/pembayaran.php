@@ -154,7 +154,9 @@ if (isset($_SESSION['user_logged'])) {
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none">   
+                  <?php echo "Halo, ".$_SESSION['user_name'];?>
+                </span>
               </a>
             </li>
     </nav>
@@ -162,24 +164,11 @@ if (isset($_SESSION['user_logged'])) {
 
 
     <?php
-    
-        function getTotal($order_id){
-            include('../config/database.php');
-            $detail = mysqli_query($mysqli, "SELECT * FROM detail_nota_suku_cadang a
-                                        INNER JOIN suku_cadang b ON a.ID_Suku_Cadang = b.ID_Suku_Cadang
-                                        WHERE a.No_Nota_Suku_Cadang = '$order_id'");
-            
-
-            $total = 0;
-            while($d = mysqli_fetch_array($detail)){
-                $total += ($d['Harga_Satuan'] * $d['Banyak']);
-            }
-
-            return $total;
-
-         
-            }
-            $pkb = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM pkb WHERE ID_PKB = '".$_GET['id']."'"));
+            $pkb           =  mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM pkb WHERE ID_PKB = '".$_GET['id']."'"));
+            $nota          =  $pkb['No_Nota_Suku_Cadang'];
+            $hasil         =  mysqli_query($mysqli, "SELECT total('$nota') AS 'Total'");
+            $row_total     =  mysqli_fetch_assoc($hasil);
+            $total         =  $row_total['Total'];
     ?>
 
 <div class="container-fluid py-1 px-5">
@@ -192,7 +181,9 @@ if (isset($_SESSION['user_logged'])) {
                 </tr>
                 <tr>
                     <th>TOTAL</th>
-                    <th><?= getTotal($pkb['No_Nota_Suku_Cadang']) ?></th>
+                    <th><?php
+                   echo "Rp. ".number_format($total);
+                    ?></th>
                 </tr>
             </table>
         </div>
@@ -221,12 +212,6 @@ if (isset($_SESSION['user_logged'])) {
 
 
                 $pkb            = $_GET['id'];
-                $total          = getTotal($o['No_Nota_Suku_Cadang']);
-
-
-
-
-                
                 $gambar         = $_FILES['gambar']['name'];
                 $lokasi         = $_FILES['gambar']['tmp_name'];
 
