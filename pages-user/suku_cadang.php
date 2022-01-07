@@ -186,38 +186,40 @@ if (isset($_SESSION['user_logged'])) {
             <div class="card-body">
               <div class="row">
 
-              <?php 
+    <?php 
 		while($spare = mysqli_fetch_array($tabel_suku_cadang)){ ?>
-
                 <div class="mb-3 col-md-8 col-lg-3">
                   <div class="border rounded h-100 d-flex flex-column justify-content-between pb-3">
                     <div class="overflow-hidden">
                       <div class="position-relative rounded-top overflow-hidden">
                           <img class="img-fluid rounded-top" style="width:100%; height: 200px; object-fit:cover;" 
-                               src="../assets/img/<?=$spare['gambar'] ?>" alt="">
+                           src="../assets/img/<?=$spare['gambar'] ?>" alt="">
                           <span class="badge badge-pill badge-success position-absolute r-0 t-0 mt-2 mr-2 z-index-2">New</span>
                         </div> 
 
                         <div class="p-3">
                         <h5 class="fs-0"><a class="text-dark" href="../e-commerce/product-details.html">
-                          <?= $spare['Nama_Suku_cadang']  ?>
+                        <?= $spare['Nama_Suku_cadang']  ?>
                         </a></h5>
                         
                         <h5 class="fs-md-2 text-warning mb-0 d-flex align-items-center mb-3"> Rp 
-                          <?php echo number_format($spare['Harga_Satuan'], 2, ',', '.') ?>
+                        <?php echo number_format($spare['Harga_Satuan'], 2, ',', '.') ?>
                         </h5>
 
-                        <p class="fs--1 mb-1">Stock: <?= (($spare['stok'] >= 1) ? '<strong class="text-success">Available</strong>' : '<strong class="text-danger">Unvailable</strong>') ?></p>
+                        <p class="fs--1 mb-1">
+                        Stock: <?= (($spare['stok'] >= 1) ? 
+                        '<strong class="text-success">Available</strong>' : '<strong class="text-danger">Unvailable</strong>') ?>
+                        </p>
 
-                        <a href="beli.php?id=<?php echo $spare['ID_Suku_Cadang']; ?>"class="btn bg-gradient-info w-100 mt-4 mb-0">Masukkan keranjang</a>
-                      
-                      
+                        <a href="beli.php?id=<?php echo $spare['ID_Suku_Cadang']; ?>"
+                        class="btn bg-gradient-info w-100 mt-4 mb-0">Masukkan keranjang
+                        </a>
+                                      
                       </div>
-                    </div>
-                   
+                    </div> 
                   </div>
                 </div>
-                <?php }?>
+      <?php }?>
               </div>
             </div>       
           </div>
