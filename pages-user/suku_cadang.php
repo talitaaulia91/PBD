@@ -210,10 +210,19 @@ if (isset($_SESSION['user_logged'])) {
                         Stock: <?= (($spare['stok'] >= 1) ? 
                         '<strong class="text-success">Available</strong>' : '<strong class="text-danger">Unvailable</strong>') ?>
                         </p>
-
+                        <?php
+                        if($spare['stok']>0){
+                        ?>
                         <a href="beli.php?id=<?php echo $spare['ID_Suku_Cadang']; ?>"
-                        class="btn bg-gradient-info w-100 mt-4 mb-0">Masukkan keranjang
-                        </a>
+                        class="btn bg-gradient-info w-100 mt-4 mb-0">Masukkan keranjang</a>
+                        <?php
+                        }else{
+                       ?>
+                        <a type="submit" value="sold" name="sold" class="btn bg-gradient-secondary w-100 mt-4 mb-0">Masukkan keranjang</a>
+                       <?php
+                        }
+                        ?>
+                        
                                       
                       </div>
                     </div> 

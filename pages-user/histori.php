@@ -235,7 +235,7 @@ if (isset($_SESSION['user_logged'])) {
                       </td>
 
                       <td class="align-middle text-center">
-                      <a href="nota.php?id=<?php echo $data_pemilik['id_pkb']; ?>" class="btn btn bg-gradient-info btn-sm">nota</a>
+                      <a href="nota.php?id=<?php echo $data_pemilik['id_pkb']; ?>" class="btn btn bg-gradient-info mt-3 btn-sm">nota</a>
                       </td>
               
                     </tr>

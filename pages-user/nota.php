@@ -1,4 +1,4 @@
-!<?php
+<?php
 session_start();
 
 include_once('../config/database.php');
@@ -220,6 +220,7 @@ if (isset($_SESSION['user_logged'])) {
                                                WHERE sc.ID_suku_Cadang = dn.ID_Suku_Cadang AND
                                                dn.No_Nota_suku_Cadang = (SELECT No_Nota_Suku_Cadang 
                                                FROM pkb WHERE ID_PKB = '".$_GET['id']."')");
+
                 $detail        =  mysqli_fetch_assoc($nsc);
                 $nota          =  $detail['No_Nota_Suku_Cadang'];
                 $hasil         =  mysqli_query($mysqli, "SELECT total('$nota') AS 'Total'");
