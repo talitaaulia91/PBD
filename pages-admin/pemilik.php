@@ -160,6 +160,26 @@ if (isset($_SESSION['user_logged'])) {
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link " href="pembayaran.php">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>credit-card</title>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g transform="translate(453.000000, 454.000000)">
+                        <path class="color-background opacity-6" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"></path>
+                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <span class="nav-link-text ms-1">Pembayaran</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <!-- <a class="nav-link  " href="../pages/virtual-reality.php"> -->
             <!-- <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"> -->
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -227,10 +247,10 @@ if (isset($_SESSION['user_logged'])) {
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 align-middle text-center text-sm">ID</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Telepon</th>
-                      <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-            
+                  
                     </tr>
                   </thead>
                  <tbody>
@@ -247,13 +267,16 @@ if (isset($_SESSION['user_logged'])) {
                      </span>
                     </td>
 
-                      <td>
-                        <p class="text-s font-weight-bold mb-0">
+                    <td class="align-middle text-center text-sm">
+                        <span class="text-s font-weight-bold mb-0">
                         <?php echo $data_pemilik['Nama_Pemilik'];  ?> 
-                        </p>
-                        <p class="text-s text-secondary mb-0">
+                        </span>
+                      </td>
+
+                      <td class="align-middle text-center text-sm">
+                        <span class="text-s font-weight-bold mb-0">
                         <?php echo $data_pemilik['Email'];  ?> 
-                        </p>
+                        </span>
                       </td>
 
                       <td class="align-middle text-center text-sm">
@@ -267,11 +290,7 @@ if (isset($_SESSION['user_logged'])) {
                         <?php echo $data_pemilik['Telp_Pemilik'];  ?> 
                         </span>
                       </td>
-
-                      <td class="align-middle text-center">
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      </td>                  
+          
                     </tr>
                   </tbody>
                   <?php

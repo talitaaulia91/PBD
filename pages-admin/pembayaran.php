@@ -1,8 +1,8 @@
 <?php
+session_start();
 include_once('../config/database.php');
-$query_suku_cadang = "SELECT * FROM suku_cadang";
-$tabel_suku_cadang = mysqli_query($mysqli, $query_suku_cadang);
-$counter = 1;
+
+$pembayaran = mysqli_query($mysqli, "SELECT * FROM pembayaran")
 ?>
 
 
@@ -33,14 +33,9 @@ $counter = 1;
 
 <body class="g-sidenav-show  bg-gray-100">
 
-<?php 
-	session_start();
- 
-	// cek apakah yang mengakses halaman ini sudah login
+<?php  
 if (isset($_SESSION['user_logged'])) {
-
- 
-	?>
+?>
 
 
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
@@ -121,7 +116,7 @@ if (isset($_SESSION['user_logged'])) {
 
 
         <li class="nav-item">
-          <a class="nav-link active" href="suku_cadang.php">
+          <a class="nav-link" href="suku_cadang.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -141,7 +136,7 @@ if (isset($_SESSION['user_logged'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="billing.php">
+          <a class="nav-link " href="billing.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -161,7 +156,7 @@ if (isset($_SESSION['user_logged'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="pembayaran.php">
+          <a class="nav-link active" href="pembayaran.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -234,58 +229,104 @@ if (isset($_SESSION['user_logged'])) {
     <!-- End Navbar -->
 
 
-    <div class="container-fluid py-1 px-5">
-              <div class="row col-md-6"> 
-              <h6 class="font-weight-bolder mb-0">Tambah suku cadang</h6>
-              <form method="post" action="" enctype="multipart/form-data">
-                    <div class="form-group  mb-0">
-                    <label for="exampleInputEmail1">Nama suku cadang</label>
-                    <input type="text" name="nama_sc"class="form-control" placeholder="Masukkan Nama suku cadang" required>
-                    </div>
-                    <div class="form-group  mb-0">
-                    <label for="exampleInputPassword1">Harga  satuan</label>
-                    <input type="text" name="harga_sc"class="form-control" placeholder="Masukkan harga satuan" required>
-                    </div>
-                    <div class="form-group  mb-0">
-                    <label for="exampleInputPassword1">Stok</label>
-                    <input type="number" name="stok"class="form-control" placeholder="Masukkan stok" required>
-                    </div>
-                    <div class="form-group  mb-0">
-                    <label for="exampleInputPassword1">Gambar</label>
-                    <input type="file" name="gambar"class="form-control" required>
-                    </div>
-      
-                <button type="submit" name="add" value="add" class="btn bg-gradient-success w-30 mt-4 mb-2">ADD +</button>
-              </form>
-              </div>
-              </div>
-              </div>
-
-
-              <?php
-                if(isset($_POST['add'])){
-                $nama_sc        = $_POST['nama_sc'];
-                $harga_sc       = $_POST['harga_sc'];
-                $stok           = $_POST['stok'];
-                $gambar         = $_FILES['gambar']['name'];
-                $lokasi         = $_FILES['gambar']['tmp_name'];
-                move_uploaded_file($lokasi, '../assets/img/'.$gambar);
-
-        
-
-
-               $suku_cadang =mysqli_query($mysqli, "INSERT INTO suku_cadang (Nama_Suku_cadang, Harga_Satuan, stok, gambar) VALUES
-                                                    ('$nama_sc', '$harga_sc', '$stok', '$gambar')");
-
-               echo "<script> location='suku_cadang.php';</script>";
-
-              }
-              ?>
-
   
-   
-   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>HISTORI</h6>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID PKB</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bukti</th>
+                      <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th> 
+                    </tr>
+                  </thead>
+                 <tbody>
+
+                    <?php
+                     foreach ($pembayaran as $data) :
+                    ?>
+                    <tr>
+
+                    
+                      <td class="align-middle text-center text-sm">
+                      <span class="text-s font-weight-bold mb-0">
+                      <?php echo $data['id_pembayaran'];  ?> 
+                     </span>
+                    </td>
+
+                      <td class="align-middle text-center text-sm">
+                        <span class="text-s font-weight-bold mb-0">
+                        <?php echo $data['id_pkb'];  ?> 
+                        </span>
+                      </td>
+
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-s font-weight-bold">
+                        <?php echo $data['total_harga'];  ?> 
+                        </span>
+                      </td>
+
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-s font-weight-bold">
+                       <a href="../assets/img/bukti/<?php echo $data['bukti'];?>" style="color:deepskyblue">BUKTI BAYAR</a>
+                        </span>
+                      </td>
+
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-s font-weight-bold">
+                        <?php if($data['status']==0){
+                                echo "BELUM DIKONFIRMASI" ;  
+                        }else{
+                          echo "SUDAH DIKONFIRMASI";
+                        }  ?> 
+                        </span>
+                      </td>
+                      <?php
+                      if($data['status']==0){
+                      ?>
+                      <td class="align-middle text-center">
+                      <a href="konfirmasi.php?id=<?php echo $data['id_pembayaran']; ?>" class="btn btn bg-gradient-success mt-3 btn-sm">CONFIRM</a>
+                      </td>
+                      <?php
+                      }else{
+                      ?>
+                      <td class="align-middle text-center">
+                      <a href="" class="btn btn bg-gradient-secondary mt-3 btn-sm">CONFIRMED</a>
+                      </td>
+                      <?php
+                      }
+                      ?>
+                      
+              
+                    </tr>
+                  </tbody>
+                  <?php
+                       endforeach
+                 ?>
+                </table>          
+              </div>          
+            </div>          
+          </div>         
+        </div>
+      </div>
+
+
+
+
+
+<!--   Core JS Files   -->
+<script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
@@ -482,3 +523,9 @@ if (isset($_SESSION['user_logged'])) {
     header('location: sign-in.php');
 }
 ?>
+
+
+
+
+
+

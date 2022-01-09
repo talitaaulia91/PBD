@@ -198,7 +198,7 @@ if (isset($_SESSION['user_logged'])) {
                     <input type="file" name="gambar"class="form-control">
                     </div>
       
-                <button type="submit" name="bayar" value="bayar" class="btn bg-gradient-info w-30 mt-4 mb-2">KONFIRMASI</button>
+                <button type="submit" name="bayar" value="bayar" class="btn bg-gradient-success w-30 mt-4 mb-2">KONFIRMASI</button>
               </form>
               </div>
               </div>
