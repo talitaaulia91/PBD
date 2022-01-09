@@ -220,7 +220,7 @@ if (isset($_SESSION['user_logged'])) {
     <!-- End Navbar -->
    
     <div class="container-fluid py-4">
-    <a class="btn bg-gradient-info w-10 mt-4 mb-3" href="create_suku_cadang.php">ADD +</a>
+    <a class="btn bg-gradient-info w-10  mb-3" href="create_suku_cadang.php">ADD +</a>
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">

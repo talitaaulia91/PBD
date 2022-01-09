@@ -226,19 +226,19 @@ if (isset($_SESSION['user_logged'])) {
               <form method="post" action="" enctype="multipart/form-data">
                     <div class="form-group form mb-0">
                     <label for="exampleInputEmail1" >ID suku cadang</label>
-                    <input disabled type="text" name="id_sc" value="<?php echo $row['ID_Suku_Cadang']; ?>" class="form-control"  placeholder="Masukkan ID suku cadang" >
+                    <input disabled type="text" name="id_sc" value="<?php echo $row['ID_Suku_Cadang']; ?>" class="form-control" >
                     </div>
                     <div class="form-group  mb-0">
                     <label for="exampleInputEmail1">Nama suku cadang</label>
-                    <input type="text" name="nama_sc"class="form-control" placeholder="Masukkan Nama suku cadang">
+                    <input type="text" name="nama_sc"class="form-control" value="<?php echo $row['Nama_Suku_cadang']; ?>"  required autofocus autocomplete="off">
                     </div>
                     <div class="form-group  mb-0">
                     <label for="exampleInputPassword1">Harga  satuan</label>
-                    <input type="text" name="harga_sc"class="form-control" placeholder="Masukkan harga satuan">
+                    <input type="text" name="harga_sc"class="form-control" value="<?php echo $row['Harga_Satuan']; ?>"  required autofocus autocomplete="off">
                     </div>
                     <div class="form-group  mb-0">
                     <label for="exampleInputPassword1">Stok</label>
-                    <input type="number" name="stok"class="form-control" placeholder="Masukkan stok">
+                    <input type="number" name="stok"class="form-control" value="<?php echo $row['stok']; ?>"  required autofocus autocomplete="off">
                     </div>
                     <div class="form-group  mb-0">
                     <label for="exampleInputPassword1">Gambar</label>
@@ -264,7 +264,7 @@ if (isset($_SESSION['user_logged'])) {
                           move_uploaded_file($lokasi,  '../assets/img/'.$gambar);
 
                           $update         = mysqli_query($mysqli, "UPDATE suku_cadang
-                                                                   SET Nama_Suku_cadang='$nama', gambar='$gambar', stok='$stok', Harga_Satuan='$harga_sc'
+                                                                   SET Nama_Suku_cadang='$nama', gambar='$gambar', stok='$stok', Harga_Satuan='$harga'
                                                                    WHERE ID_Suku_Cadang='" . $_GET['ID_Suku_Cadang'] ."'");
 
 

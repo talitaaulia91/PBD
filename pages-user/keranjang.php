@@ -2,6 +2,7 @@
 session_start();
 
 include_once('../config/database.php');
+$counter=0;
 
 ?>
 
@@ -187,7 +188,8 @@ if (isset($_SESSION['user_logged'])) {
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 align-middle text-center text-sm">ID produk</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID produk</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Produk</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
@@ -205,15 +207,19 @@ if (isset($_SESSION['user_logged'])) {
                                                     WHERE ID_Suku_Cadang ='$id_suku_cadang'");
                  $ambil_data = $data_suku_cadang->fetch_assoc();
                  $subtotal = $ambil_data['Harga_Satuan']*$jumlah;
-            
+                 $counter++ ;
 
                  ?>
                     <tr>
+                      <td class="align-middle text-center">
+                      <?php echo $counter; ?>
+                      </td>
+
                       <td class="align-middle text-center text-sm">
                       <span class="text-s font-weight-bold mb-0">
                       <?php echo $ambil_data['ID_Suku_Cadang']; ?>
-                     </span>
-                    </td>
+                      </span>
+                      </td>
 
 
                       <td class="align-middle text-center text-sm">
@@ -245,7 +251,7 @@ if (isset($_SESSION['user_logged'])) {
                     </tr>
 
                     <?php
-                    endforeach
+                     endforeach      
                     ?> 
                   </tbody>
                
@@ -258,7 +264,24 @@ if (isset($_SESSION['user_logged'])) {
         </div>
       </div>
 
-      <a href="cek.php"class="btn bg-gradient-info w-20 mt-4 mb-2">Checkout</a>
+      <!-- <a href="cek.php"class="btn bg-gradient-info w-20 mt-4 mb-2">Checkout</a> -->
+      <?php
+      if($counter == 0){
+      ?>
+      <a class="btn bg-gradient-warning mb-3" href="suku_cadang.php">Continue Shopping</a>
+      <a class="btn bg-gradient-secondary mb-3" href="">Checkout</a>
+
+      <?php
+      }else{
+      ?>
+
+      <a class="btn bg-gradient-warning mb-3" href="suku_cadang.php">Continue Shopping</a>
+      <a class="btn bg-gradient-info  mb-3" href="cek.php">Checkout</a>
+      <?php
+      }
+      ?>
+
+     
                
 
 

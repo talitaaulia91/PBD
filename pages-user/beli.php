@@ -12,6 +12,6 @@ if(isset($_GET['id'])){
 
 
 echo "<script>alert('Produk dimasukkan ke keranjang!');</script>";
-echo "<script>location='keranjang.php';</script>";
+echo "<script>location='suku_cadang.php';</script>";
 
 ?>

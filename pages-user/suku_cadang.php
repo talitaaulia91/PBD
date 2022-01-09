@@ -218,7 +218,7 @@ if (isset($_SESSION['user_logged'])) {
                         <?php
                         }else{
                        ?>
-                        <a type="submit" value="sold" name="sold" class="btn bg-gradient-secondary w-100 mt-4 mb-0">Masukkan keranjang</a>
+                       <a href="" class="btn bg-gradient-secondary w-100 mt-4 mb-0">Masukkan keranjang</a>
                        <?php
                         }
                         ?>

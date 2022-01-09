@@ -218,25 +218,21 @@ if (isset($_SESSION['user_logged'])) {
               <div class="row col-md-6"> 
               <h6 class="font-weight-bolder mb-0">Tambah suku cadang</h6>
               <form method="post" action="" enctype="multipart/form-data">
-                    <div class="form-group form mb-0">
-                    <label for="exampleInputEmail1" >ID suku cadang</label>
-                    <input type="text" name="id_sc" class="form-control"  placeholder="Masukkan ID suku cadang" >
-                    </div>
                     <div class="form-group  mb-0">
                     <label for="exampleInputEmail1">Nama suku cadang</label>
-                    <input type="text" name="nama_sc"class="form-control" placeholder="Masukkan Nama suku cadang">
+                    <input type="text" name="nama_sc"class="form-control" placeholder="Masukkan Nama suku cadang" required>
                     </div>
                     <div class="form-group  mb-0">
                     <label for="exampleInputPassword1">Harga  satuan</label>
-                    <input type="text" name="harga_sc"class="form-control" placeholder="Masukkan harga satuan">
+                    <input type="text" name="harga_sc"class="form-control" placeholder="Masukkan harga satuan" required>
                     </div>
                     <div class="form-group  mb-0">
                     <label for="exampleInputPassword1">Stok</label>
-                    <input type="number" name="stok"class="form-control" placeholder="Masukkan stok">
+                    <input type="number" name="stok"class="form-control" placeholder="Masukkan stok" required>
                     </div>
                     <div class="form-group  mb-0">
                     <label for="exampleInputPassword1">Gambar</label>
-                    <input type="file" name="gambar"class="form-control">
+                    <input type="file" name="gambar"class="form-control" required>
                     </div>
       
                 <button type="submit" name="add" value="add" class="btn bg-gradient-info w-30 mt-4 mb-2">ADD +</button>
@@ -248,7 +244,6 @@ if (isset($_SESSION['user_logged'])) {
 
               <?php
                 if(isset($_POST['add'])){
-                $id_sc          = $_POST['id_sc'];
                 $nama_sc        = $_POST['nama_sc'];
                 $harga_sc       = $_POST['harga_sc'];
                 $stok           = $_POST['stok'];
@@ -259,8 +254,10 @@ if (isset($_SESSION['user_logged'])) {
         
 
 
-               $suku_cadang =mysqli_query($mysqli, "INSERT INTO suku_cadang VALUES
-                                                    ('$id_sc','$nama_sc', '$harga_sc', '$stok', '$gambar')");
+               $suku_cadang =mysqli_query($mysqli, "INSERT INTO suku_cadang (Nama_Suku_cadang, Harga_Satuan, stok, gambar) VALUES
+                                                    ('$nama_sc', '$harga_sc', '$stok', '$gambar')");
+
+               echo "<script> location='suku_cadang.php';</script>";
 
               }
               ?>
