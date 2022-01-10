@@ -237,6 +237,7 @@ if (isset($_SESSION['user_logged'])) {
 
     date_default_timezone_set("Asia/jakarta");
     $tanggal        = date("Y-m-d"); 
+    
     $pkb = mysqli_query($mysqli, "SELECT SUM(dn.Banyak) AS 'banyak' FROM nota_suku_cadang nsc, detail_nota_suku_cadang dn
                                   WHERE nsc.No_Nota_Suku_Cadang = dn.No_Nota_Suku_Cadang AND nsc.Tgl_Nota_Suku_Cadang = '$tanggal'");
     $sales    = $pkb->fetch_assoc();
