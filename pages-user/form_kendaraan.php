@@ -244,9 +244,9 @@ if (isset($_SESSION['user_logged'])) {
                   $row_pemilik = $pemilik->fetch_assoc();
                   $id_customer = $row_pemilik['ID_Pemilik'];
 
-                     //insert kendaraan
-                    $kendaraan   = mysqli_query($mysqli, "INSERT INTO kendaraan VALUES
-                    ('$no_stnk', '$id_customer','$id_tipe', '$no_mesin', '$no_rangka', '$tahun', '$warna')");
+                  //insert kendaraan
+                  $kendaraan   = mysqli_query($mysqli, "INSERT INTO kendaraan VALUES
+                                ('$no_stnk', '$id_customer','$id_tipe', '$no_mesin', '$no_rangka', '$tahun', '$warna')");
                 }
 
 

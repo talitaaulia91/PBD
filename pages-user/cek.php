@@ -7,7 +7,7 @@ include_once('../config/database.php');
 	$cek = mysqli_num_rows($pemilik);
 
 	if($cek > 0){
-			header('location:form_kendaraan.php');
+			header('location:kendaraan.php');
 	}else{
 		    header('location:form_pemilik.php');
 	}

@@ -254,7 +254,7 @@ $id = $_GET['id'];
 ?>
 
 <?php if(mysqli_num_rows($cek) < 1){ ?>
-  <a class="btn bg-gradient-info w-10 mt-4 mb-3" href="pembayaran.php?id=<?php echo $id; ?>">BAYAR</a>
+  <a class="btn bg-gradient-success w-10 mt-4 mb-3" href="pembayaran.php?id=<?php echo $id; ?>">BAYAR</a>
 <?php } ?>
 
 
