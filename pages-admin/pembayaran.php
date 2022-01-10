@@ -246,8 +246,8 @@ if (isset($_SESSION['user_logged'])) {
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID PKB</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bukti</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                       <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th> 
                     </tr>
                   </thead>
