@@ -1,7 +1,5 @@
 <?php
 include_once('../config/database.php');
-$query_suku_cadang = "SELECT * FROM suku_cadang WHERE ID_Suku_Cadang = '".$_GET['ID_Suku_Cadang']."'";
-$tabel_suku_cadang = mysqli_query($mysqli, $query_suku_cadang);
 $counter = 1;
 ?>
 
@@ -235,9 +233,9 @@ if (isset($_SESSION['user_logged'])) {
     
 
     <?php
-
+    $query_suku_cadang = "SELECT * FROM suku_cadang WHERE ID_Suku_Cadang = '".$_GET['ID_Suku_Cadang']."'";
+    $tabel_suku_cadang = mysqli_query($mysqli, $query_suku_cadang);
     $row = $tabel_suku_cadang->fetch_assoc();
-
     ?>
 
     <div class="container-fluid py-1 px-5">

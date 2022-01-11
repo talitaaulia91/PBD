@@ -260,8 +260,8 @@ if (isset($_SESSION['user_logged'])) {
                  <tbody>
 
                     <?php
-
-$counter = 1;
+                     $tabel_suku_cadang = mysqli_query($mysqli,"SELECT * FROM suku_cadang");	
+                     $counter = 1;
                      while($data_suku_cadang = mysqli_fetch_array($tabel_suku_cadang)){ 
                     ?>
                     <tr>
