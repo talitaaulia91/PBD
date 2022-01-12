@@ -196,7 +196,7 @@ if (isset($_SESSION['user_logged'])) {
             </div>
          
       
-            <a class="btn bg-gradient-primary mt-4 w-80" href="../pages-all/logout.php" type="button">LOGOUT</a>
+            <a class="btn bg-gradient-primary mt-4 w-80" href="../logout.php" type="button">LOGOUT</a>
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
@@ -219,7 +219,7 @@ if (isset($_SESSION['user_logged'])) {
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="../pages-all/logout.php" class="nav-link text-body font-weight-bold px-0">
+              <a href="" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">
                   <?php echo "Halo, ".$_SESSION['user_name'];?>

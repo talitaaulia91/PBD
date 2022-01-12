@@ -200,7 +200,7 @@ if (isset($_SESSION['user_logged'])) {
             </div>
          
       
-            <a class="btn bg-gradient-primary mt-4 w-80" href="../pages-all/logout.php" type="button">LOGOUT</a>
+            <a class="btn bg-gradient-primary mt-4 w-80" href="../logout.php" type="button">LOGOUT</a>
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">

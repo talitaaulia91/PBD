@@ -1,11 +1,8 @@
 <?php 
 session_start();
  
-include ('../config/database.php');
+include ('./config/database.php');
 
-if (isset($_SESSION['user_logged'])) {
-	header('location: ../pages-admin/dashboard.php');
-}
  
 if (isset($_POST['login'])) {
 	$username = $_POST['username'];
@@ -24,9 +21,9 @@ if (isset($_POST['login'])) {
 		$_SESSION['user_role'] = $user['role'];
 
 		if ($user['role'] == 'User') {
-			header('location:../pages-user/suku_cadang.php');
+			header('location:./pages-user/suku_cadang.php');
 		} elseif ($user['role'] == 'admin') {
-			header('location:../pages-admin/dashboard.php');
+			header('location:./pages-admin/dashboard.php');
 		}		
 	} else {
 		echo "<script> alert('Username atau password salah!'); </script>";
